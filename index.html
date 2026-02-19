@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>月次請求業務 完全管理ダッシュボード</title>
+<title>月次請求業務 管理ダッシュボード</title>
 
 <style>
 body{
@@ -16,19 +16,19 @@ body{
 header{
   background:#111827;
   color:white;
-  padding:30px 50px;
+  padding:25px 40px;
 }
 
-h1{ margin:0; font-size:22px; }
+h1{ margin:0; font-size:20px; }
 
 .tabs{
   display:flex;
   gap:12px;
-  padding:20px 50px;
+  padding:20px 40px;
 }
 
 .tab{
-  padding:8px 18px;
+  padding:8px 16px;
   background:#e5e7eb;
   border-radius:20px;
   cursor:pointer;
@@ -41,89 +41,47 @@ h1{ margin:0; font-size:22px; }
 }
 
 .container{
-  padding:0 50px 50px 50px;
-  overflow-x:auto;
+  padding:0 40px 40px 40px;
 }
-
-.gantt{
-  min-width:1700px;
-}
-
-.header-days{
-  display:grid;
-  grid-template-columns:360px repeat(24,60px);
-  font-weight:bold;
-}
-
-.header-days div{
-  text-align:center;
-  padding:6px 0;
-}
-
-.day{
-  background:#e5e7eb;
-  border-right:1px solid #d1d5db;
-}
-
-.header-times{
-  display:grid;
-  grid-template-columns:360px repeat(24,60px);
-  font-size:11px;
-  border-bottom:2px solid #d1d5db;
-}
-
-.header-times div{
-  text-align:center;
-  padding:4px 0;
-  background:#f3f4f6;
-}
-
-.row{
-  display:grid;
-  grid-template-columns:360px repeat(24,60px);
-  align-items:center;
-  margin:6px 0;
-}
-
-.task{
-  font-size:12px;
-  line-height:1.4;
-}
-
-.meta{
-  font-size:10px;
-  color:#6b7280;
-}
-
-.bar{
-  height:18px;
-  border-radius:4px;
-}
-
-.blue{ background:#3b82f6; }
-.green{ background:#10b981; }
-.orange{ background:#f59e0b; }
-.red{ background:#ef4444; }
-.purple{ background:#8b5cf6; }
 
 .section{ display:none; }
 .section.active{ display:block; }
 
-.checklist{
-  margin-top:40px;
+.task-card{
   background:white;
-  padding:25px;
-  border-radius:12px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.06);
+  padding:18px;
+  border-radius:10px;
+  margin-bottom:14px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.05);
 }
 
-.checklist h3{
-  margin-top:0;
+.task-title{
+  font-weight:600;
+  margin-bottom:10px;
 }
 
-.check-item{
-  margin-bottom:6px;
-  font-size:13px;
+input{
+  padding:6px 8px;
+  font-size:12px;
+  margin-right:8px;
+  border:1px solid #d1d5db;
+  border-radius:6px;
+}
+
+.save-btn{
+  padding:6px 12px;
+  background:#2563eb;
+  color:white;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  font-size:12px;
+}
+
+.meta-display{
+  margin-top:8px;
+  font-size:12px;
+  color:#374151;
 }
 </style>
 </head>
@@ -131,7 +89,7 @@ h1{ margin:0; font-size:22px; }
 <body>
 
 <header>
-<h1>月次請求業務 完全管理ダッシュボード</h1>
+<h1>月次請求業務 管理ダッシュボード</h1>
 </header>
 
 <div class="tabs">
@@ -141,168 +99,38 @@ h1{ margin:0; font-size:22px; }
 </div>
 
 <div class="container">
-<div class="gantt">
 
-<!-- 営業日 -->
-<div class="header-days">
-  <div></div>
-  <div class="day" style="grid-column:2/8;">1営業日目</div>
-  <div class="day" style="grid-column:8/14;">2営業日目</div>
-  <div class="day" style="grid-column:14/20;">3営業日目</div>
-  <div class="day" style="grid-column:20/26;">4営業日目</div>
-</div>
-
-<!-- 時間 -->
-<div class="header-times">
-  <div></div>
-  <div>11</div><div>13</div><div>15</div><div>17</div><div>19</div><div>21</div>
-  <div>11</div><div>13</div><div>15</div><div>17</div><div>19</div><div>21</div>
-  <div>11</div><div>13</div><div>15</div><div>17</div><div>19</div><div>21</div>
-  <div>11</div><div>13</div><div>15</div><div>17</div><div>19</div><div>21</div>
-</div>
-
-<!-- ===================== 予算案件 ===================== -->
-
+<!-- 予算案件 -->
 <div id="budget" class="section active">
-
-<div class="row">
-  <div class="task">
-    Slackスレッド作成／フォルダ作成<br>
-    <span class="meta">責任：数値担当者／宮田｜担当：数値担当者／宮田</span>
+  <div class="task-card" data-key="budget_task1">
+    <div class="task-title">媒体CSV取得</div>
+    責任者：<input type="text" class="responsible">
+    担当者：<input type="text" class="owner">
+    <button class="save-btn" onclick="saveTask(this)">保存</button>
+    <div class="meta-display"></div>
   </div>
-  <div class="bar blue" style="grid-column:2/5;"></div>
 </div>
 
-<div class="row">
-  <div class="task">
-    媒体CSV出力・格納<br>
-    <span class="meta">責任：運用者｜担当：運用者</span>
-  </div>
-  <div class="bar blue" style="grid-column:5/9;"></div>
-</div>
-
-<div class="row">
-  <div class="task">
-    差異確認（ALL_Daily）<br>
-    <span class="meta">責任：数値担当者｜担当：運用者</span>
-  </div>
-  <div class="bar green" style="grid-column:9/14;"></div>
-</div>
-
-<div class="row">
-  <div class="task">
-    コストFix報告<br>
-    <span class="meta">責任：数値担当者</span>
-  </div>
-  <div class="bar orange" style="grid-column:14/16;"></div>
-</div>
-
-<div class="row">
-  <div class="task">
-    請求書作成・送付<br>
-    <span class="meta">責任：宮野</span>
-  </div>
-  <div class="bar red" style="grid-column:17/22;"></div>
-</div>
-
-</div>
-
-<!-- ===================== 成果案件 ===================== -->
-
+<!-- 成果案件 -->
 <div id="result" class="section">
-
-<div class="row">
-  <div class="task">
-    CATS/AFAD/管理画面成果出力<br>
-    <span class="meta">責任：数値担当者／宮田</span>
+  <div class="task-card" data-key="result_task1">
+    <div class="task-title">成果ログ出力</div>
+    責任者：<input type="text" class="responsible">
+    担当者：<input type="text" class="owner">
+    <button class="save-btn" onclick="saveTask(this)">保存</button>
+    <div class="meta-display"></div>
   </div>
-  <div class="bar blue" style="grid-column:2/7;"></div>
 </div>
 
-<div class="row">
-  <div class="task">
-    件数差異確認／否認反映<br>
-    <span class="meta">責任：数値担当者</span>
-  </div>
-  <div class="bar green" style="grid-column:7/12;"></div>
-</div>
-
-<div class="row">
-  <div class="task">
-    売上Fix報告<br>
-    <span class="meta">責任：数値担当者</span>
-  </div>
-  <div class="bar purple" style="grid-column:12/14;"></div>
-</div>
-
-<div class="row">
-  <div class="task">
-    コスト取得・差異確認<br>
-    <span class="meta">責任：数値担当者／運用者</span>
-  </div>
-  <div class="bar orange" style="grid-column:14/20;"></div>
-</div>
-
-<div class="row">
-  <div class="task">
-    請求書作成・送付<br>
-    <span class="meta">責任：宮野</span>
-  </div>
-  <div class="bar red" style="grid-column:20/24;"></div>
-</div>
-
-</div>
-
-<!-- ===================== Ai案件 ===================== -->
-
+<!-- Ai案件 -->
 <div id="ai" class="section">
-
-<div class="row">
-  <div class="task">
-    CSV＋スクショ取得<br>
-    <span class="meta">責任：運用者</span>
+  <div class="task-card" data-key="ai_task1">
+    <div class="task-title">三重差異確認</div>
+    責任者：<input type="text" class="responsible">
+    担当者：<input type="text" class="owner">
+    <button class="save-btn" onclick="saveTask(this)">保存</button>
+    <div class="meta-display"></div>
   </div>
-  <div class="bar blue" style="grid-column:2/7;"></div>
-</div>
-
-<div class="row">
-  <div class="task">
-    スクショ照合／三重差異確認<br>
-    <span class="meta">責任：数値担当者</span>
-  </div>
-  <div class="bar orange" style="grid-column:7/15;"></div>
-</div>
-
-<div class="row">
-  <div class="task">
-    社内外確定報告<br>
-    <span class="meta">責任：数値担当者</span>
-  </div>
-  <div class="bar purple" style="grid-column:15/18;"></div>
-</div>
-
-<div class="row">
-  <div class="task">
-    請求書作成・送付<br>
-    <span class="meta">責任：宮野</span>
-  </div>
-  <div class="bar red" style="grid-column:18/24;"></div>
-</div>
-
-</div>
-
-</div>
-
-<!-- ===================== チェックリスト ===================== -->
-
-<div class="checklist">
-<h3>チェックリスト</h3>
-<div class="check-item"><input type="checkbox"> Slackスレッド作成済</div>
-<div class="check-item"><input type="checkbox"> データ出力完了</div>
-<div class="check-item"><input type="checkbox"> 差異確認完了</div>
-<div class="check-item"><input type="checkbox"> Fix報告済</div>
-<div class="check-item"><input type="checkbox"> 請求書作成済</div>
-<div class="check-item"><input type="checkbox"> 社外送付完了</div>
 </div>
 
 </div>
@@ -314,6 +142,33 @@ function showTab(id,el){
   document.getElementById(id).classList.add('active');
   el.classList.add('active');
 }
+
+function saveTask(btn){
+  const card = btn.closest('.task-card');
+  const key = card.dataset.key;
+  const responsible = card.querySelector('.responsible').value;
+  const owner = card.querySelector('.owner').value;
+
+  const data = { responsible, owner };
+  localStorage.setItem(key, JSON.stringify(data));
+
+  card.querySelector('.meta-display').innerText =
+    "責任者：" + responsible + " / 担当者：" + owner;
+}
+
+window.onload = function(){
+  document.querySelectorAll('.task-card').forEach(card=>{
+    const key = card.dataset.key;
+    const saved = localStorage.getItem(key);
+    if(saved){
+      const data = JSON.parse(saved);
+      card.querySelector('.responsible').value = data.responsible;
+      card.querySelector('.owner').value = data.owner;
+      card.querySelector('.meta-display').innerText =
+        "責任者：" + data.responsible + " / 担当者：" + data.owner;
+    }
+  });
+};
 </script>
 
 </body>
